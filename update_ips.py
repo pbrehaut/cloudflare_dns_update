@@ -95,6 +95,10 @@ for zone_id, zone_name in zone_id_names:
             print(payload)
             update_host(b, zone_id, r_id, r_ip, payload)
 
+            # Write dns and ip to file to be queried via DNS
+            with open(os.path.join(TIMESTAMP, 'CloudFlare Queries.txt'), 'a', encoding='utf-8') as QF:
+                QF.write(r_name + ' ' + old_new_map[r_ip] + '\n')
+
     # Write out pre change zone data to file - one text and json file per zone
     with open(os.path.join(TIMESTAMP, zone_name + '.txt'), 'w', encoding='utf-8') as F:
         F.write(json.dumps(store_zones[zone_name], indent=3))
